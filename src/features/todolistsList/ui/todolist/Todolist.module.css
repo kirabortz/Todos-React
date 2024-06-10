@@ -1,0 +1,33 @@
+@keyframes FadeOpacity {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.dragging {
+    opacity: 0.2;
+}
+
+.canDrop {
+    border: 5px dashed green;
+}
+
+.todolist {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+    position: relative;
+    cursor: move;
+    box-shadow: 0 0 8px 4px #1D318A;
+
+
+}
+
+
+
+

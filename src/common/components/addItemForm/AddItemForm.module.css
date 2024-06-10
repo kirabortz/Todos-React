@@ -1,0 +1,15 @@
+@keyframes EffectAddItem {
+  0% {
+    color: inherit;
+  }
+  50% {
+    color: #FFDC00EA;
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+.addItemBtn:hover {
+  animation: EffectAddItem 1200ms Infinite;
+}

@@ -1,0 +1,15 @@
+@keyframes DeleteTodo {
+    0% {
+        color: #ff0000;
+    }
+    50% {
+        color: inherit;
+    }
+    100% {
+        color: #ff0000;
+    }
+}
+
+.deleteBtn:hover {
+    animation: DeleteTodo 1200ms Infinite;
+}
