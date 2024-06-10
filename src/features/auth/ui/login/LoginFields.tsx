@@ -24,7 +24,7 @@ export const LoginFields = ({ control, setValue, trigger, isShowPassword, toggle
         fieldName="Email"
         placeholder="Enter your email"
         control={control}
-        setValue={() => (setValue("email", "free@samuraijs.com"), trigger("email"))}
+        setValue={() => (setValue("email", "test.incubator.test@mail.ru"), trigger("email"))}
         rules={{
           required: "Email is required",
           pattern: {
@@ -39,7 +39,7 @@ export const LoginFields = ({ control, setValue, trigger, isShowPassword, toggle
         fieldName="Password"
         placeholder="Enter your password"
         control={control}
-        setValue={() => (setValue("password", "free"), trigger("password"))}
+        setValue={() => (setValue("password", "test123"), trigger("password"))}
         rules={{
           required: "Password is required",
           minLength: {
