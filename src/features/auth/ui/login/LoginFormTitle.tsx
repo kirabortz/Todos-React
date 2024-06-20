@@ -1,7 +1,7 @@
-import React from "react"
-import s from "features/auth/ui/login/LoginForm.module.css"
-import { Link } from "react-router-dom"
-import { useLoginStyles } from "features/auth/lib/useLoginStyles"
+import React from 'react'
+import s from 'features/auth/ui/login/LoginForm.module.css'
+import { Link } from 'react-router-dom'
+import { useLoginStyles } from 'features/auth/lib/useLoginStyles'
 
 export const LoginFormTitle = () => {
   const { textStyle } = useLoginStyles()
@@ -9,8 +9,8 @@ export const LoginFormTitle = () => {
   return (
     <div className={s.containerText}>
       <span className={s.text} style={textStyle}>
-        To log in get{" "}
-        <Link to="https://social-network.samuraijs.com/" target={"_blank"}>
+        To log in get{' '}
+        <Link to="https://social-network.samuraijs.com/" target={'_blank'}>
           registered
         </Link>
       </span>

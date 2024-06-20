@@ -1,7 +1,7 @@
-import React, { ChangeEvent, memo, useState } from "react"
-import TextField, { TextFieldVariants } from "@mui/material/TextField"
-import { useToggleEditModeStyles } from "common/components/toggleEditMode/lib/useToggleEditModeStyles"
-import { Box } from "@mui/material"
+import React, { ChangeEvent, memo, useState } from 'react'
+import TextField, { TextFieldVariants } from '@mui/material/TextField'
+import { useToggleEditModeStyles } from 'common/components/toggleEditMode/lib/useToggleEditModeStyles'
+import { Box } from '@mui/material'
 
 type Props = {
   onChange: (title: string) => void
@@ -14,7 +14,7 @@ type Props = {
 export const ToggleEditMode = memo(({ onChange, title, variant, taskStatus, disabled }: Props) => {
   const { textFieldStyle, taskSuccessedColor } = useToggleEditModeStyles({ taskStatus, variant })
   let [editMode, setEditMode] = useState(false)
-  let [localTitle, setLocalTitle] = useState("")
+  let [localTitle, setLocalTitle] = useState('')
 
   const showEditMode = () => {
     setEditMode(true)
@@ -22,10 +22,11 @@ export const ToggleEditMode = memo(({ onChange, title, variant, taskStatus, disa
   }
 
   const hideEditMode = (e: any) => {
-    e.key === "Enter" || (e.type === "blur" && (setEditMode(false), onChange(localTitle)))
+    e.key === 'Enter' || (e.type === 'blur' && (setEditMode(false), onChange(localTitle)))
   }
 
-  const updateTitleHandler = (e: ChangeEvent<HTMLInputElement>) => setLocalTitle(e.currentTarget.value)
+  const updateTitleHandler = (e: ChangeEvent<HTMLInputElement>) =>
+    setLocalTitle(e.currentTarget.value)
   return (
     <Box>
       {editMode ? (
@@ -42,7 +43,7 @@ export const ToggleEditMode = memo(({ onChange, title, variant, taskStatus, disa
         />
       ) : (
         <TextField
-          variant={variant || "standard"}
+          variant={variant || 'standard'}
           inputProps={{ style: { color: taskSuccessedColor } }}
           value={title}
           multiline

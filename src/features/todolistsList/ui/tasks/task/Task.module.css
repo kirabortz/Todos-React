@@ -10,7 +10,6 @@
   }
 }
 
-
 .taskDeleteBtn:hover {
   animation: EffectDelTask 1200ms Infinite;
 }

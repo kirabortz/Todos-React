@@ -1,4 +1,4 @@
-export type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">
+export type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, 'meta'>
 
 export type ResponseProps<D = {}> = {
   resultCode: number
@@ -11,6 +11,6 @@ type FieldErrorProps = {
   field: string
 }
 
-export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type NetworkErrorType = string | null
-export type FilterValuesType = "all" | "active" | "completed"
+export type FilterValuesType = 'all' | 'active' | 'completed'

@@ -1,10 +1,10 @@
-import React from "react"
-import s from "features/auth/ui/login/LoginForm.module.css"
-import { useActions } from "common/hooks/useActions"
+import React from 'react'
+import s from 'features/auth/ui/login/LoginForm.module.css'
+import { useActions } from 'common/hooks/useActions'
 
-import { UseFormRegister } from "react-hook-form"
-import { LoginProps } from "features/auth/ui/login/login.types"
-import { useLoginStyles } from "features/auth/lib/useLoginStyles"
+import { UseFormRegister } from 'react-hook-form'
+import { LoginProps } from 'features/auth/ui/login/login.types'
+import { useLoginStyles } from 'features/auth/lib/useLoginStyles'
 
 type Props = {
   captcha: string
@@ -22,7 +22,7 @@ export const Captcha = ({ captcha, register }: Props) => {
         autoFocus
         placeholder="Сomplete the captcha "
         style={{ ...inputStyle }}
-        {...register("captcha", { required: true })}
+        {...register('captcha', { required: true })}
       />
     </div>
   )

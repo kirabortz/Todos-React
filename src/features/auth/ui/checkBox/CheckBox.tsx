@@ -1,9 +1,9 @@
-import React from "react"
-import * as Checkbox from "@radix-ui/react-checkbox"
-import { CheckIcon } from "@radix-ui/react-icons"
-import styles from "features/auth/ui/checkBox/CheckBox.module.css"
-import { useController, UseControllerProps } from "react-hook-form"
-import { LoginProps } from "features/auth/ui/login/login.types"
+import React from 'react'
+import * as Checkbox from '@radix-ui/react-checkbox'
+import { CheckIcon } from '@radix-ui/react-icons'
+import styles from 'features/auth/ui/checkBox/CheckBox.module.css'
+import { useController, UseControllerProps } from 'react-hook-form'
+import { LoginProps } from 'features/auth/ui/login/login.types'
 
 type Props<T extends LoginProps> = UseControllerProps<T>
 

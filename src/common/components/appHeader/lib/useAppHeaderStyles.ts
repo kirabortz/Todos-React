@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material"
+import { useTheme } from '@mui/material'
 
 export const useAppHeaderStyles = () => {
   const theme = useTheme()
@@ -8,8 +8,9 @@ export const useAppHeaderStyles = () => {
   }
 
   const toolBarStyle = {
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    gap: '28px',
+    justifyContent: 'space-between',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
   }
@@ -20,7 +21,7 @@ export const useAppHeaderStyles = () => {
 
   const linkStyle = {
     color: theme.palette.text.secondary,
-    textDecoration: "none",
+    textDecoration: 'none',
   }
   return { linkStyle, boxStyle, toolBarStyle, linearProgressStyle }
 }

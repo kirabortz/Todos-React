@@ -1,40 +1,38 @@
 .field {
-    position: relative;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    gap: 4px;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+
+  .error {
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    color: red;
+    font-size: 10px;
+  }
+
+  label {
+    cursor: pointer;
+
+    &:hover {
+      color: #7bff7b;
+    }
+
+    &:active {
+      color: green;
+    }
+  }
+
+  input {
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
     width: 100%;
-
-    .error {
-        position: absolute;
-        bottom: 0;
-        left: 4px;
-        color: red;
-        font-size: 10px;
-    }
-
-    label {
-        cursor: pointer;
-
-        &:hover {
-            color: #7bff7b;
-        }
-
-        &:active {
-            color: green;
-        }
-    }
-
-    input {
-        height: 40px;
-        border-radius: 5px;
-        border: none;
-        outline: none;
-        width: 100%;
-        text-indent: 10px;
-        font-size: 16px;
-    }
-
+    text-indent: 10px;
+    font-size: 16px;
+  }
 }
-

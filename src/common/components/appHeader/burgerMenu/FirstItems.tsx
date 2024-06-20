@@ -1,7 +1,7 @@
-import React from "react"
-import { ListItem, ListItemButton, ListItemText, SxProps, Theme } from "@mui/material"
-import { DarkMode, LightMode } from "@mui/icons-material"
-import List from "@mui/material/List"
+import React from 'react'
+import { ListItem, ListItemButton, ListItemText, SxProps, Theme } from '@mui/material'
+import { DarkMode, LightMode } from '@mui/icons-material'
+import List from '@mui/material/List'
 
 export type FirstItemsProps = {
   changeTheme: () => void
@@ -12,11 +12,11 @@ export type FirstItemsProps = {
 export const FirstItems = ({ changeTheme, theme, themeModeBtnStyle }: FirstItemsProps) => {
   return (
     <List>
-      {["Theme"].map((text) => (
+      {['Theme'].map(text => (
         <ListItem key={text} disablePadding>
-          {text === "Theme" ? (
+          {text === 'Theme' ? (
             <ListItemButton onClick={changeTheme}>
-              {text === "Theme" && theme.palette.mode === "dark" ? (
+              {text === 'Theme' && theme.palette.mode === 'dark' ? (
                 <DarkMode sx={themeModeBtnStyle} />
               ) : (
                 <LightMode sx={themeModeBtnStyle} />

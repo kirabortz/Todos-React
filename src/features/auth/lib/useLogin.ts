@@ -1,9 +1,9 @@
-import { FieldErrors, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form"
-import { useActions } from "common/hooks/useActions"
-import { useTheme } from "@mui/material"
+import { FieldErrors, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
+import { useActions } from 'common/hooks/useActions'
+import { useTheme } from '@mui/material'
 
-import { useState } from "react"
-import { LoginProps } from "features/auth/ui/login/login.types"
+import { useState } from 'react'
+import { LoginProps } from 'features/auth/ui/login/login.types'
 
 export const useLogin = () => {
   const {
@@ -17,8 +17,8 @@ export const useLogin = () => {
     reset,
     formState: { errors, isValid },
   } = useForm<LoginProps>({
-    mode: "onChange",
-    criteriaMode: "all",
+    mode: 'onChange',
+    criteriaMode: 'all',
   })
   const theme = useTheme()
   const { login, getSecurityApi } = useActions()
@@ -32,9 +32,7 @@ export const useLogin = () => {
   const onSubmit: SubmitHandler<LoginProps> = async (data: LoginProps) => {
     try {
       await login(data).unwrap()
-    } catch (e: unknown) {
-
-    }
+    } catch (e: unknown) {}
   }
 
   const onInvalidSubmit: SubmitErrorHandler<LoginProps> = async (data: FieldErrors<LoginProps>) => {

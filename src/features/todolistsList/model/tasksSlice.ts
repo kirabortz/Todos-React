@@ -1,7 +1,7 @@
-import { TasksApi } from "features/todolistsList/api/tasksApi"
-import { RootState } from "app/model/Store"
+import { TasksApi } from 'features/todolistsList/api/tasksApi'
+import { RootState } from 'app/model/Store'
 
-import { updateTaskModel } from "features/todolistsList/lib/updateItemModel"
+import { updateTaskModel } from 'features/todolistsList/lib/updateItemModel'
 import {
   asyncThunkCreator,
   buildCreateSlice,
@@ -9,12 +9,12 @@ import {
   isPending,
   isRejected,
   PayloadAction,
-} from "@reduxjs/toolkit"
-import { addTodolist, resetTodosAndTasksData } from "features/todolistsList/model/todolistsSlice"
-import { ResultCode, TaskStatuses } from "common/enums/enums"
+} from '@reduxjs/toolkit'
+import { addTodolist, resetTodosAndTasksData } from 'features/todolistsList/model/todolistsSlice'
+import { ResultCode, TaskStatuses } from 'common/enums/enums'
 
-import { RequestStatusType, ResponseProps } from "common/types/types"
-import { TaskProps, UpdateTaskModelProps } from "features/todolistsList/ui/tasks/tasks.types"
+import { RequestStatusType, ResponseProps } from 'common/types/types'
+import { TaskProps, UpdateTaskModelProps } from 'features/todolistsList/ui/tasks/tasks.types'
 
 export type TasksDomainProps = TaskProps & {
   entityStatus: RequestStatusType
@@ -25,11 +25,11 @@ const createAppSlice = buildCreateSlice({
 })
 
 const slice = createAppSlice({
-  name: "tasksReducer",
+  name: 'tasksReducer',
   initialState: {
     tasks: {} as Record<string, TasksDomainProps[]>,
   },
-  reducers: (creators) => {
+  reducers: creators => {
     const createAThunk = creators.asyncThunk.withTypes<{ rejectValue: ResponseProps | null }>()
     return {
       fetchTasks: createAThunk<{ todoListId: string; tasks: TaskProps[] }, { todoListId: string }>(
@@ -42,12 +42,12 @@ const slice = createAppSlice({
         },
         {
           fulfilled: (state, action: PayloadAction<{ todoListId: string; tasks: TaskProps[] }>) => {
-            state.tasks[action.payload.todoListId] = action.payload.tasks.map((task) => ({
+            state.tasks[action.payload.todoListId] = action.payload.tasks.map(task => ({
               ...task,
-              entityStatus: "idle",
+              entityStatus: 'idle',
             }))
           },
-        },
+        }
       ),
 
       addTask: createAThunk<{ task: TaskProps }, { todoListId: string; title: string }>(
@@ -62,15 +62,21 @@ const slice = createAppSlice({
         },
         {
           fulfilled: (state, action: PayloadAction<{ task: TaskProps }>) => {
-            state.tasks[action.payload.task.todoListId].unshift({ ...action.payload.task, entityStatus: "idle" })
+            state.tasks[action.payload.task.todoListId].unshift({
+              ...action.payload.task,
+              entityStatus: 'idle',
+            })
           },
-        },
+        }
       ),
 
-      updateTask: createAThunk<{ task: TaskProps }, { todoListId:string, taskId:string, updatedParam:any }>(
+      updateTask: createAThunk<
+        { task: TaskProps },
+        { todoListId: string; taskId: string; updatedParam: any }
+      >(
         async ({ todoListId, taskId, updatedParam }, { rejectWithValue, getState }) => {
           const state = (getState() as RootState).tasksReducer.tasks[todoListId]
-          const task = state.find((task) => task.id === taskId)
+          const task = state.find(task => task.id === taskId)
           if (task) {
             const updatedTask: UpdateTaskModelProps = updateTaskModel(task, updatedParam)
             const res = await TasksApi.updateTask(todoListId, taskId, updatedTask)
@@ -89,7 +95,7 @@ const slice = createAppSlice({
         {
           fulfilled: (state, action: PayloadAction<{ task: TaskProps }>) => {
             const index = state.tasks[action.payload.task.todoListId].findIndex(
-              (task) => task.id === action.payload.task.id,
+              task => task.id === action.payload.task.id
             )
 
             const taskListId = action.payload.task.todoListId
@@ -100,9 +106,12 @@ const slice = createAppSlice({
               }
             }
           },
-        },
+        }
       ),
-      deleteTask: createAThunk<{ todoListId: string; taskId: string }, { todoListId: string; taskId: string }>(
+      deleteTask: createAThunk<
+        { todoListId: string; taskId: string },
+        { todoListId: string; taskId: string }
+      >(
         async ({ todoListId, taskId }, { rejectWithValue }) => {
           let res = await TasksApi.deleteTask(todoListId, taskId)
           if (res.data.resultCode === ResultCode.success) {
@@ -113,108 +122,162 @@ const slice = createAppSlice({
         },
         {
           fulfilled: (state, action: PayloadAction<{ todoListId: string; taskId: string }>) => {
-            const index = state.tasks[action.payload.todoListId].findIndex((task) => task.id === action.payload.taskId)
+            const index = state.tasks[action.payload.todoListId].findIndex(
+              task => task.id === action.payload.taskId
+            )
             if (index !== -1) state.tasks[action.payload.todoListId].splice(index, 1)
           },
-        },
+        }
       ),
 
-      reorderedTask: createAThunk<
-        {
-          todoListId: string
-          taskId: string
-          endListId: string
-          startIndex: number
-          endIndex: number
-        },
-        { todoListId: string; taskId: string; endListId: string; startIndex: number; endIndex: number }
-      >(
-        async ({ todoListId, taskId, endListId, startIndex, endIndex }, { rejectWithValue, getState }) => {
-          const state = getState() as RootState
-          const endId = state.tasksReducer.tasks[todoListId][endIndex].id
-          const res = await TasksApi.dragDropTask(todoListId, taskId, endId)
-
-          if (res.data.resultCode === ResultCode.success) {
-            return { todoListId, taskId, endListId, startIndex, endIndex }
-          } else {
-            return rejectWithValue(null)
+      reorderTask: creators.reducer(
+        (
+          state,
+          action: PayloadAction<{
+            todoListId: string
+            startDragId: string
+            endShiftId: string | null
+          }>
+        ) => {
+          const { todoListId, startDragId, endShiftId } = action.payload
+          const dragIndex = state.tasks[todoListId].findIndex((t: any) => t.id === startDragId)
+          const targetIndex = state.tasks[todoListId].findIndex((t: any) => t.id === endShiftId)
+          if (dragIndex > -1 && targetIndex > -1) {
+            const draggedItem = state.tasks[todoListId].splice(dragIndex, 1)[0]
+            state.tasks[todoListId].splice(targetIndex, 0, draggedItem)
           }
-        },
-        {
-          fulfilled: (
-            state,
-            action: PayloadAction<{
-              todoListId: string
-              taskId: string
-              endListId: string
-              startIndex: number
-              endIndex: number
-            }>,
-          ) => {
-            const newSourceTasks = [...state.tasks[action.payload.todoListId]]
+        }
+      ),
+      moveTaskAcrossTodolists: creators.reducer(
+        (
+          state,
+          action: PayloadAction<{
+            todoListId: string
+            endTodoListId: string
+            startDragId: string
+            endShiftId: string | null
+          }>
+        ) => {
+          const { startDragId, endShiftId, todoListId, endTodoListId } = action.payload
 
-            const newDestinationTasks =
-              action.payload.todoListId !== action.payload.endListId
-                ? [...state.tasks[action.payload.endListId]]
-                : newSourceTasks
+          const startTodolistTasks = state.tasks[todoListId]
+          const endTodolistTasks = state.tasks[endTodoListId]
 
-            const [removedTask] = newSourceTasks.splice(action.payload.startIndex, 1)
+          const startTaskIndex = startTodolistTasks.findIndex(
+            (task: any) => task.id === startDragId
+          )
+          const endTaskIndex = endTodolistTasks.findIndex((task: any) => task.id === endShiftId)
 
-            removedTask.todoListId = action.payload.endListId
+          const draggedTask = startTodolistTasks[startTaskIndex]
+          draggedTask.todoListId = endTodoListId
 
-            newDestinationTasks.splice(action.payload.endIndex, 0, removedTask)
+          if (!draggedTask) {
+            console.warn(`Task with id ${startDragId} not found`)
+            return
+          }
 
-            if (action.payload.todoListId === action.payload.endListId) {
-              state.tasks[action.payload.todoListId] = newSourceTasks
-            }
-            state.tasks[action.payload.endListId] = newDestinationTasks
-          },
-        },
+          startTodolistTasks.splice(startTaskIndex, 1)
+
+          if (endShiftId) {
+            endTodolistTasks.splice(endTaskIndex, 0, draggedTask)
+          } else {
+            endTodolistTasks.push(draggedTask)
+          }
+        }
+      ),
+      moveTaskInEmptyTodolists: creators.reducer(
+        (
+          state,
+          action: PayloadAction<{
+            todoListId: string
+            endTodoListId: string
+            startDragId: string
+          }>
+        ) => {
+          const { startDragId, todoListId, endTodoListId } = action.payload
+
+          const endTodolistTasks = state.tasks[endTodoListId]
+          const taskToPut = state.tasks[todoListId].find((task: any) => task.id === startDragId)
+
+          const startTodolistTasks = state.tasks[todoListId]
+          startTodolistTasks.splice(
+            startTodolistTasks.findIndex((task: any) => task.id === startDragId),
+            1
+          )
+
+          if (taskToPut) {
+            endTodolistTasks.unshift(taskToPut)
+            taskToPut.todoListId = endTodoListId
+          }
+        }
       ),
     }
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(resetTodosAndTasksData, (state) => {
+      .addCase(resetTodosAndTasksData, state => {
         state.tasks = {}
       })
       .addCase(addTodolist.fulfilled, (state, action) => {
         state.tasks[action.payload.todolist.id] = []
       })
       .addMatcher(isPending(updateTask, deleteTask), (state, action) => {
-        const index = state.tasks[action.meta.arg.todoListId].findIndex((task) => task.id === action.meta.arg.taskId)
+        const index = state.tasks[action.meta.arg.todoListId].findIndex(
+          task => task.id === action.meta.arg.taskId
+        )
         if (index !== -1) {
-          state.tasks[action.meta.arg.todoListId][index].entityStatus = "loading"
+          state.tasks[action.meta.arg.todoListId][index].entityStatus = 'loading'
         }
       })
       .addMatcher(isFulfilled(updateTask, deleteTask), (state, action) => {
-        const index = state.tasks[action.meta.arg.todoListId].findIndex((task) => task.id === action.meta.arg.taskId)
+        const index = state.tasks[action.meta.arg.todoListId].findIndex(
+          task => task.id === action.meta.arg.taskId
+        )
         if (index !== -1) {
-          state.tasks[action.meta.arg.todoListId][index].entityStatus = "succeeded"
+          state.tasks[action.meta.arg.todoListId][index].entityStatus = 'succeeded'
         }
       })
       .addMatcher(isRejected(updateTask, deleteTask), (state, action) => {
-        const index = state.tasks[action.meta.arg.todoListId].findIndex((task) => task.id === action.meta.arg.taskId)
+        const index = state.tasks[action.meta.arg.todoListId].findIndex(
+          task => task.id === action.meta.arg.taskId
+        )
         if (index !== -1) {
-          state.tasks[action.meta.arg.todoListId][index].entityStatus = "failed"
+          state.tasks[action.meta.arg.todoListId][index].entityStatus = 'failed'
         }
       })
   },
   selectors: {
     selectFilteredTasks: (state, todoListId, filter) => {
       switch (filter) {
-        case "active":
-          return state.tasks[todoListId].filter((task) => task.status === TaskStatuses.New)
-        case "completed":
-          return state.tasks[todoListId].filter((task) => task.status === TaskStatuses.Completed)
+        case 'active':
+          return state.tasks[todoListId].filter(task => task.status === TaskStatuses.New)
+        case 'completed':
+          return state.tasks[todoListId].filter(task => task.status === TaskStatuses.Completed)
         default:
           return state.tasks[todoListId]
       }
     },
+    tasksState: state => state.tasks,
   },
 })
 
 export const tasksReducer = slice.reducer
-export const { fetchTasks, addTask, updateTask, deleteTask, reorderedTask } = slice.actions
-export const tasksThunks = { fetchTasks, addTask, updateTask, deleteTask, reorderedTask }
+export const {
+  fetchTasks,
+  addTask,
+  moveTaskInEmptyTodolists,
+  reorderTask,
+  moveTaskAcrossTodolists,
+  updateTask,
+  deleteTask,
+} = slice.actions
+export const tasksThunks = {
+  fetchTasks,
+  reorderTask,
+  moveTaskInEmptyTodolists,
+  moveTaskAcrossTodolists,
+  addTask,
+  updateTask,
+  deleteTask,
+}
 export const tasksSelectors = slice.selectors

@@ -5,4 +5,4 @@ export type LoginProps = {
   captcha?: string
 }
 
-export type LoginName = "password" | "email" | "rememberMe" | "captcha"
+export type LoginName = 'password' | 'email' | 'rememberMe' | 'captcha'

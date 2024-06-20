@@ -1,5 +1,5 @@
-import { TaskPriorities, TaskStatuses } from "common/enums/enums"
-import { RequestStatusType } from "common/types/types"
+import { TaskPriorities, TaskStatuses } from 'common/enums/enums'
+import { RequestStatusType } from 'common/types/types'
 
 export type TaskProps = {
   description: string
@@ -14,7 +14,9 @@ export type TaskProps = {
   addedDate: string
 }
 
-export type UpdateTaskModelProps = Partial<Omit<TaskProps, "id" | "todoListId" | "order" | "addedDate">> & {
+export type UpdateTaskModelProps = Partial<
+  Omit<TaskProps, 'id' | 'todoListId' | 'order' | 'addedDate'>
+> & {
   entityStatus?: RequestStatusType
 }
 

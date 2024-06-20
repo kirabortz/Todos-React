@@ -1,15 +1,15 @@
-import React, { memo, useState } from "react"
-import Button from "@mui/material/Button"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
-import DialogTitle from "@mui/material/DialogTitle"
-import CancelPresentation from "@mui/icons-material/CancelPresentation"
-import s from "features/todolistsList/ui/deleteModal/DeleteTodolistModal.module.css"
-import { useActions } from "common/hooks/useActions"
-import IconButton from "@mui/material/IconButton"
-import { useDeleteModalStyles } from "features/todolistsList/lib/hooks/useDeleteModalStyles"
+import React, { memo, useState } from 'react'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import CancelPresentation from '@mui/icons-material/CancelPresentation'
+import s from 'features/todolistsList/ui/deleteModal/DeleteTodolistModal.module.css'
+import { useActions } from 'common/hooks/useActions'
+import IconButton from '@mui/material/IconButton'
+import { useDeleteModalStyles } from 'features/todolistsList/lib/hooks/useDeleteModalStyles'
 
 type Props = {
   id: string
@@ -32,7 +32,7 @@ export const DeleteTodolistModal = memo(({ id, disabled, title }: Props) => {
   const showModalHandler = () => setOpen(true)
 
   const hideModalHandler = (e: any) => {
-    if (e.key == "Escape") {
+    if (e.key == 'Escape') {
       setOpen(false)
     }
     setOpen(false)
@@ -45,7 +45,12 @@ export const DeleteTodolistModal = memo(({ id, disabled, title }: Props) => {
 
   return (
     <>
-      <IconButton sx={deleteTodolistBtnStyle} className={s.deleteBtn} onClick={showModalHandler} disabled={disabled}>
+      <IconButton
+        sx={deleteTodolistBtnStyle}
+        className={s.deleteBtn}
+        onClick={showModalHandler}
+        disabled={disabled}
+      >
         <CancelPresentation />
       </IconButton>
 
@@ -56,7 +61,7 @@ export const DeleteTodolistModal = memo(({ id, disabled, title }: Props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" sx={dialogTitleStyle}>
-          Are you sure want to delete <span style={{ color: "aqua" }}>"{title}"</span> todolist?
+          Are you sure want to delete <span style={{ color: 'aqua' }}>"{title}"</span> todolist?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description" sx={dialogContentTextStyle}>

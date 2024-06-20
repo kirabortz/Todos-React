@@ -1,9 +1,9 @@
-import React from "react"
-import _ from "lodash"
-import s from "./Pagination.module.css"
-import Button from "@mui/material/Button"
-import { useActions } from "common/hooks/useActions"
-import { useTheme } from "@mui/material"
+import React from 'react'
+import _ from 'lodash'
+import s from './Pagination.module.css'
+import Button from '@mui/material/Button'
+import { useActions } from 'common/hooks/useActions'
+import { useTheme } from '@mui/material'
 
 type Props = {
   itemsLength: number
@@ -25,17 +25,23 @@ export const Pagination = ({ itemsLength, pageSize, currentPage }: Props) => {
   const pages: Array<number> = _.range(1, pageCount + 1)
 
   const btnStyle = {
-    color: theme.palette.mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main,
-    backgroundColor: theme.palette.mode === "light" ? theme.palette.primary.main : theme.palette.secondary.main,
+    color:
+      theme.palette.mode === 'light' ? theme.palette.secondary.main : theme.palette.primary.main,
+    backgroundColor:
+      theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.secondary.main,
   }
   return (
     <nav>
       <ul className={s.pagination}>
-        {pages.map((page) => (
-          <li key={"page_" + page}>
+        {pages.map(page => (
+          <li key={'page_' + page}>
             <Button
-              style={page === currentPage ? { color: btnStyle.color, backgroundColor: btnStyle.backgroundColor } : {}}
-              variant={page === currentPage ? "contained" : "outlined"}
+              style={
+                page === currentPage
+                  ? { color: btnStyle.color, backgroundColor: btnStyle.backgroundColor }
+                  : {}
+              }
+              variant={page === currentPage ? 'contained' : 'outlined'}
               onClick={() => changePage(page)}
             >
               {page}

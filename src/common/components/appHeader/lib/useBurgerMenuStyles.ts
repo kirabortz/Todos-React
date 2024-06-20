@@ -1,11 +1,11 @@
-import { useTheme } from "@mui/material"
+import { useTheme } from '@mui/material'
 
 export const useBurgerMenuStyles = () => {
   const theme = useTheme()
 
   const boxStyle = {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   }
 
   const menuIconStyle = {
@@ -17,9 +17,10 @@ export const useBurgerMenuStyles = () => {
   }
 
   const menuItemsStyle = {
-    display: "flex",
-    flexFlow: "column nowrap",
-    alignItems: "center",
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    alignItems: 'center',
+
     backgroundColor: theme.palette.primary.main,
   }
 

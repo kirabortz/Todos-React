@@ -1,16 +1,16 @@
-import { useTheme } from "@mui/material"
+import { useTheme } from '@mui/material'
 
 export const useAutoCompleteStyles = () => {
   const theme = useTheme()
 
   const textFieldStyle = {
     root: {
-      "& .MuiOutlinedInput-root": {
+      '& .MuiOutlinedInput-root': {
         color: theme.palette.text.secondary,
-        "& .MuiOutlinedInput-notchedOutline": {
+        '& .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.secondary.light,
         },
-        "&.Mui-focused fieldset": {
+        '&.Mui-focused fieldset': {
           borderColor: theme.palette.secondary.light,
         },
       },
