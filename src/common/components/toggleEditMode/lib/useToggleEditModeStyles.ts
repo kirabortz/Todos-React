@@ -10,6 +10,9 @@ export const useToggleEditModeStyles = ({ taskStatus, variant }: Props) => {
   const theme = useTheme()
 
   const textFieldStyle = {
+    '.MuiInputBase-root, .MuiOutlinedInput-root': {
+      padding: '0 5px',
+    },
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
