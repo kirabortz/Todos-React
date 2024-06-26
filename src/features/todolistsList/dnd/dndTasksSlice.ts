@@ -23,6 +23,7 @@ const addTaskDnDTC = createAppAsyncThunk<
   }
 >(`${slice.name}/addTaskDnDTC`, async (arg, thunkAPI) => {
   const { rejectWithValue } = thunkAPI
+  //@ts-ignore
   const res = await TasksApi.addTask(arg.todoListId, arg.title)
   if (res.data.resultCode === 0) {
     const task = res.data.data.item

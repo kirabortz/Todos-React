@@ -61,7 +61,7 @@ export const DeleteTodolistModal = memo(({ id, disabled, title }: Props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" sx={dialogTitleStyle}>
-          Are you sure want to delete <span style={{ color: 'aqua' }}>"{title}"</span> todolist?
+          Are you sure want to delete <span style={{ color: 'red' }}>"{title}"</span> todolist?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description" sx={dialogContentTextStyle}>

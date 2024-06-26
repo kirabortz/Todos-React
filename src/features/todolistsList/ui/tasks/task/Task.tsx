@@ -95,6 +95,7 @@ export const Task = memo(({ task, listId }: Props) => {
         taskStatus={task.status}
         onChange={updateTitleHandler}
         disabled={isDisabledTask}
+        variant={'standard'}
       />
       <IconButton onClick={deleteTaskHandler} disabled={isDisabledTask}>
         <Delete sx={deleteBtnStyle} className={s.taskDeleteBtn} />

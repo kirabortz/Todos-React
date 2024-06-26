@@ -68,7 +68,7 @@ export const Todolist = memo(({ todolist }: Props) => {
       <ToggleEditMode
         onChange={updateTitleHandler}
         title={todolist.title}
-        variant="filled"
+        variant="standard"
         disabled={isDisabled}
       />
 

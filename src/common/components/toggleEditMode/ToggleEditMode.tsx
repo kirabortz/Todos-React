@@ -2,6 +2,8 @@ import React, { ChangeEvent, memo, useState } from 'react'
 import TextField, { TextFieldVariants } from '@mui/material/TextField'
 import { useToggleEditModeStyles } from 'common/components/toggleEditMode/lib/useToggleEditModeStyles'
 import { Box } from '@mui/material'
+import { appActions } from 'app/model/appSlice'
+import { useAppDispatch } from 'app/model/Store'
 
 type Props = {
   onChange: (title: string) => void
@@ -15,18 +17,26 @@ export const ToggleEditMode = memo(({ onChange, title, variant, taskStatus, disa
   const { textFieldStyle, taskSuccessedColor } = useToggleEditModeStyles({ taskStatus, variant })
   let [editMode, setEditMode] = useState(false)
   let [localTitle, setLocalTitle] = useState('')
-
+  const dispatch = useAppDispatch()
   const showEditMode = () => {
     setEditMode(true)
     setLocalTitle(title)
   }
 
   const hideEditMode = (e: any) => {
-    e.key === 'Enter' || (e.type === 'blur' && (setEditMode(false), onChange(localTitle)))
+    if (e.key === 'Enter' || e.type === 'blur') {
+      dispatch(appActions.changeBlockDragMode({ isBlockDragMode: false }))
+
+      setEditMode(false)
+      onChange(localTitle.trim())
+    }
   }
 
   const updateTitleHandler = (e: ChangeEvent<HTMLInputElement>) =>
     setLocalTitle(e.currentTarget.value)
+  const onFocusHandler = () => {
+    dispatch(appActions.changeBlockDragMode({ isBlockDragMode: true }))
+  }
   return (
     <Box>
       {editMode ? (
@@ -38,12 +48,13 @@ export const ToggleEditMode = memo(({ onChange, title, variant, taskStatus, disa
           disabled={disabled}
           onBlur={hideEditMode}
           onKeyUp={hideEditMode}
+          onFocus={onFocusHandler}
           onChange={updateTitleHandler}
           sx={textFieldStyle}
         />
       ) : (
         <TextField
-          variant={variant || 'standard'}
+          variant={variant || 'outlined'}
           inputProps={{ style: { color: taskSuccessedColor } }}
           value={title}
           multiline

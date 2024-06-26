@@ -230,7 +230,7 @@ export const DndContextHOC = (props: { children: React.ReactNode }) => {
     >
       {props.children}
       {createPortal(
-        <DragOverlay>
+        <DragOverlay style={{ cursor: 'grabbing' }}>
           {activeTodo && (
             <div>
               <Todolist key={activeTodo.id} todolist={activeTodo} />
