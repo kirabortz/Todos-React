@@ -74,7 +74,7 @@
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    display: none; /* скрыть подсказку по умолчанию */
+    display: none;
     padding: 5px;
     border-radius: 4px;
     background-color: #6e6e6e;
@@ -84,6 +84,6 @@
   }
 
   &:hover::after {
-    display: block; /* показать подсказку при наведении */
+    display: block;
   }
 }
